@@ -2,6 +2,7 @@
 
 /** Requiere the JWT library. */
 use \Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 /**
  * The public-facing functionality of the plugin.
@@ -252,7 +253,7 @@ class Jwt_Auth_Public
 
         /** Try to decode the token */
         try {
-            $token = JWT::decode($token, $secret_key, array('HS256'));
+            $token = JWT::decode($token, new Key($secret_key, 'HS256'));
             /** The Token is decoded now validate the iss */
             if ($token->iss != get_bloginfo('url')) {
                 /** The iss do not match, return error */
